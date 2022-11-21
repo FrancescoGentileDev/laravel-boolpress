@@ -10,7 +10,6 @@ import ContentComponent from '../components/contentComponent.vue'
 import headerComponent from '../components/headerComponent.vue'
 export default {
   components: { headerComponent, ContentComponent },
-
 }
 </script>
 
