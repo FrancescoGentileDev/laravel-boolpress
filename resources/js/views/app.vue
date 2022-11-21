@@ -1,13 +1,15 @@
 <template>
   <div>
   <header-component />
+  <content-component />
   </div>
 </template>
 
 <script>
+import ContentComponent from '../components/contentComponent.vue'
 import headerComponent from '../components/headerComponent.vue'
 export default {
-  components: { headerComponent },
+  components: { headerComponent, ContentComponent },
 
 }
 </script>
