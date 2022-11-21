@@ -15,7 +15,8 @@ class PostController extends Controller
     public function index()
     {
         //
-        $posts = Post::paginate(6);
+        Post::orderBy('id', 'DESC')->get();
+        $posts = Post::orderBy('id', 'DESC')->paginate(6);
         foreach ($posts as $post) {
              $post['category'] = $post->category->name;
 

@@ -1988,6 +1988,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     details: Object
+  },
+  data: function data() {
+    return {
+      date: undefined
+    };
+  },
+  created: function created() {
+    var string = this.details.updated_at;
+    var date = new Date(string).toLocaleString('it-IT');
+    this.date = date;
   }
 });
 
@@ -2148,7 +2158,7 @@ var staticRenderFns = [function () {
     }
   }, [_vm._v("Tag")])]), _vm._v(" "), _c("li", [_c("a", {
     attrs: {
-      href: "#"
+      href: "/login"
     }
   }, [_vm._v("Login")])])])]), _vm._v(" "), _c("div", {
     staticClass: "phrase"
@@ -2178,23 +2188,23 @@ var render = function render() {
     staticStyle: {
       width: "20rem"
     }
-  }, [_c("img", {
+  }, [_vm.details.image ? _c("img", {
     staticClass: "card-img-top",
     attrs: {
       src: _vm.details.image,
       alt: "Card image cap"
     }
-  }), _vm._v(" "), _c("div", {
+  }) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "card-body"
   }, [_c("p", {
     staticClass: "card-subtitle text-muted"
-  }, [_vm._v(_vm._s(_vm.details.updated_at))]), _vm._v(" "), _c("h5", {
+  }, [_vm._v(_vm._s(_vm.date))]), _vm._v(" "), _c("h5", {
     staticClass: "card-title"
   }, [_vm._v(_vm._s(_vm.details.title))]), _vm._v(" "), _c("p", {
     staticClass: "card-text"
   }, [_vm._v("\n                Some quick example text to build on the card title and make\n                up the bulk of the card's content.\n            ")])]), _vm._v(" "), _c("div", {
     staticClass: "card-footer text-muted"
-  }, [_vm._v("\n        cat 1, cat2\n        ")])])]);
+  }, [_vm._v("\n        " + _vm._s(_vm.details.category.name) + "\n        ")])])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;

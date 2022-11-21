@@ -1,9 +1,9 @@
 <template>
     <article>
         <div class="card" style="width: 20rem">
-            <img class="card-img-top" :src="details.image" alt="Card image cap" />
+            <img v-if="details.image" class="card-img-top" :src="details.image" alt="Card image cap" />
             <div class="card-body">
-                <p class="card-subtitle text-muted">{{ details.updated_at }}</p>
+                <p class="card-subtitle text-muted">{{ date }}</p>
                 <h5 class="card-title">{{ details.title }}</h5>
                 <p class="card-text">
                     Some quick example text to build on the card title and make
@@ -11,7 +11,7 @@
                 </p>
             </div>
             <div class="card-footer text-muted">
-            cat 1, cat2
+            {{ details.category.name }}
             </div>
         </div>
     </article>
@@ -21,7 +21,18 @@
 export default {
     props: {
         details: Object
-    }
+    },
+    data() {
+        return {
+            date: undefined,
+        }
+    },
+    created() {
+      let string = this.details.updated_at;
+      let date = new Date(string).toLocaleString('it-IT')
+      this.date = date;
+
+    },
 };
 </script>
 

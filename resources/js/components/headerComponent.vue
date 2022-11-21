@@ -6,7 +6,7 @@
                 <li><a href="#">Home</a></li>
                 <li><a href="#">Categories</a></li>
                 <li><a href="#">Tag</a></li>
-                <li><a href="#">Login</a></li>
+                <li><a href="/login">Login</a></li>
             </ul>
         </nav>
         <div class='phrase'>
