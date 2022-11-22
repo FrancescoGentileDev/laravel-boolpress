@@ -1,20 +1,19 @@
 <template>
-  <div>
-  <header-component />
-  <content-component />
-  </div>
+    <div>
+        <header-component />
+        <router-view></router-view>
+    </div>
 </template>
 
 <script>
-import ContentComponent from '../components/contentComponent.vue'
-import headerComponent from '../components/headerComponent.vue'
+import headerComponent from "../components/headerComponent.vue";
 export default {
-  components: { headerComponent, ContentComponent },
-}
+    components: { headerComponent },
+};
 </script>
 
 <style lang="scss" scoped>
-    body {
-        background-color: black;
-    }
+body {
+    background-color: black;
+}
 </style>

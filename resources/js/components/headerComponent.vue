@@ -3,9 +3,8 @@
         <nav class="d-flex justify-content-around">
             <h1>BOOLPRESS</h1>
             <ul class="link d-flex">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Categories</a></li>
-                <li><a href="#">Tag</a></li>
+                <li><router-link :to="{name: 'home'}">Home</router-link></li>
+                <li><router-link :to="{name: 'about'}">About</router-link></li>
                 <li><a href="/login">Login</a></li>
             </ul>
         </nav>
