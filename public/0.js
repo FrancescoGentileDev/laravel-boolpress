@@ -78,7 +78,9 @@ __webpack_require__.r(__webpack_exports__);
         _this2.posts = data.data;
         delete data.data;
         _this2.page = data;
-        _this2.$router.push('?page=' + data.current_page);
+        if (data.current_page > 1 && data.current_page <= data.last_page) _this2.$router.push('?page=' + data.current_page);else {
+          _this2.$router.push('');
+        }
       });
     },
     openArticle: function openArticle(data) {

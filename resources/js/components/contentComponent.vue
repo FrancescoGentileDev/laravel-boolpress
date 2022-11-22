@@ -90,7 +90,11 @@ export default {
                 this.posts = data.data;
                 delete data.data;
                 this.page = data;
-                this.$router.push('?page='+data.current_page)
+                if(data.current_page > 1&&data.current_page <= data.last_page)
+                this.$router.push('?page='+data.current_page);
+                else {
+                    this.$router.push('');
+                }
             });
         },
         openArticle(data) {
