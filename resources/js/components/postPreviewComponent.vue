@@ -4,7 +4,7 @@
             <img v-if="details.image" class="card-img-top" :src="details.image" alt="Card image cap" />
             <div class="card-body">
                 <p class="card-subtitle text-muted">{{ date }}</p>
-                <h5 class="card-title">{{ details.title }}</h5>
+                <h5 class="card-title" @click="clickTitle">{{ details.title }}</h5>
                 <p class="card-text">
                     Some quick example text to build on the card title and make
                     up the bulk of the card's content.
@@ -33,8 +33,19 @@ export default {
       this.date = date;
 
     },
+    methods: {
+        clickTitle() {
+            this.$emit('clickedTitle', this.details.id)
+        }
+    }
 };
 </script>
 
 <style lang="scss" scoped>
+h5 {
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+}
 </style>

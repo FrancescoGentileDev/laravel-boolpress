@@ -15,3 +15,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::resource('posts', 'api\PostController');
+Route::resource('category', 'api\CategoryController');

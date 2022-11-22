@@ -1,11 +1,17 @@
 <template>
-    <div class="container">
-        <category-badges-component class="categories" />
+<div>
+  <category-badges-component
+            class="categories"
+            :categories="categories"
+        />
+    <div class="container" v-if="page">
+
         <div class="post-container">
             <post-preview-component
                 v-for="(post, index) in posts"
                 :key="index"
                 :details="post"
+                @clickedTitle="openArticle"
             />
         </div>
         <nav
@@ -13,7 +19,12 @@
             class="mt-3 d-flex justify-content-center"
         >
             <ul class="pagination pagination-lg">
-                <li class="page-item" @click="changePage('prev')" ref="prev">
+                <li
+                    class="page-item"
+                    :class="{ disabled: page.current_page === 1 }"
+                    @click="changePage('prev')"
+                    ref="prev"
+                >
                     <button class="page-link">Prev</button>
                 </li>
                 <li class="page-item">
@@ -21,11 +32,17 @@
                         {{ page.current_page }}/{{ page.last_page }}
                     </p>
                 </li>
-                <li class="page-item" ref="next" @click="changePage('next')">
+                <li
+                    class="page-item"
+                    :class="{ disabled: page.current_page === page.last_page }"
+                    ref="next"
+                    @click="changePage('next')"
+                >
                     <button class="page-link">Next</button>
                 </li>
             </ul>
         </nav>
+    </div>
     </div>
 </template>
 
@@ -38,6 +55,7 @@ export default {
         return {
             posts: undefined,
             page: undefined,
+            categories: undefined,
         };
     },
     created() {
@@ -46,6 +64,9 @@ export default {
             this.posts = data.data;
             delete data.data;
             this.page = data;
+        });
+        axios.get("/api/category").then(({ data }) => {
+            this.categories = data;
         });
     },
     methods: {
@@ -58,6 +79,9 @@ export default {
                 this.page = data;
             });
         },
+        openArticle(data) {
+            console.log(data);
+        },
     },
 };
 </script>
@@ -67,7 +91,10 @@ export default {
     height: 100vh;
 }
 .categories {
-    margin: 2rem 0;
+    padding:0;
+    margin: 2rem auto;
+    max-width: 90%;
+    overflow-x: scroll;
 }
 .post-container {
     margin-top: 2rem;

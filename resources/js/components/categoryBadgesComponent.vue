@@ -1,21 +1,16 @@
 <template>
   <div>
   <ul class="d-flex">
-  <li>1</li>
-  <li>2</li>
-  <li>3</li>
-  <li>4</li>
-  <li>5</li>
-  <li>6</li>
-  <li>7</li>
-  <li>8</li>
+  <li v-for="(category, index) in categories" :key="index">{{ category.name }}</li>
   </ul>
   </div>
 </template>
 
 <script>
 export default {
-
+    props: {
+        categories: Array,
+    }
 }
 </script>
 
@@ -23,9 +18,11 @@ export default {
 ul {
     list-style: none;
     justify-content: space-between;
+    gap: 1rem;
     li {
         font-size: 1.3rem;
         border: 2px solid #666;
+        flex-wrap: wrap;
         padding: 0 2rem;
         border-radius: 30px;
     }
