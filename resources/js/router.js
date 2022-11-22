@@ -8,21 +8,26 @@ const router = new VueRouter({
     routes: [
         {
             path: "/",
-            alias: "/home",
+            alias: "/post",
             name: "home",
-            component: () => import("./views/homeSection.vue")
+            component: () => import("./views/homeSection.vue"),
+        },
+        {
+            path: "/post/:slug",
+            name: "post",
+            component: () => import("./views/postSection.vue"),
         },
         {
             path: "/about",
             name: "about",
-            component: () => import("./views/AboutSection.vue")
+            component: () => import("./views/AboutSection.vue"),
         },
         {
             path: "/*",
             name: "notfound",
-            component: () => import("./views/NotFoundSection.vue")
-        }
-    ]
+            component: () => import("./views/NotFoundSection.vue"),
+        },
+    ],
 });
 
 export default router;

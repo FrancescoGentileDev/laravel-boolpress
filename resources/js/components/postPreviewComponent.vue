@@ -35,7 +35,7 @@ export default {
     },
     methods: {
         clickTitle() {
-            this.$emit('clickedTitle', this.details.id)
+            this.$emit('clickedTitle', this.details.slug)
         }
     }
 };

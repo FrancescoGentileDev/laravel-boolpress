@@ -84,7 +84,9 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     openArticle: function openArticle(data) {
-      console.log(data);
+      this.$router.push({
+        path: "/post/".concat(data)
+      });
     }
   }
 });
@@ -116,7 +118,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     clickTitle: function clickTitle() {
-      this.$emit('clickedTitle', this.details.id);
+      this.$emit('clickedTitle', this.details.slug);
     }
   }
 });

@@ -98,7 +98,7 @@ export default {
             });
         },
         openArticle(data) {
-            console.log(data);
+          this.$router.push({path: `/post/${data}`})
         },
 
     },
