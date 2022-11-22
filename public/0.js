@@ -44,13 +44,25 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     var _this = this;
-    axios.get("/api/posts").then(function (_ref) {
-      var data = _ref.data;
-      console.log(data);
-      _this.posts = data.data;
-      delete data.data;
-      _this.page = data;
-    });
+    var string = "";
+    if (this.$route.query.page) string = "?page=" + this.$route.query.page;
+    var search = function search() {
+      axios.get("/api/posts" + string).then(function (_ref) {
+        var data = _ref.data;
+        if (_this.$route.query.page > data.last_page) {
+          _this.$router.push({
+            path: "/"
+          });
+          string = "";
+          search();
+        }
+        console.log(data);
+        _this.posts = data.data;
+        delete data.data;
+        _this.page = data;
+      });
+    };
+    search();
     axios.get("/api/category").then(function (_ref2) {
       var data = _ref2.data;
       _this.categories = data;
@@ -66,6 +78,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.posts = data.data;
         delete data.data;
         _this2.page = data;
+        _this2.$router.push('?page=' + data.current_page);
       });
     },
     openArticle: function openArticle(data) {

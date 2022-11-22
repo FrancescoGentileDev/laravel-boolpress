@@ -59,12 +59,25 @@ export default {
         };
     },
     created() {
-        axios.get("/api/posts").then(({ data }) => {
-            console.log(data);
-            this.posts = data.data;
-            delete data.data;
-            this.page = data;
-        });
+
+        let string = ""
+        if(this.$route.query.page)
+        string = "?page="+ this.$route.query.page
+        const search =  () => {
+            axios.get("/api/posts"+ string).then(({ data }) => {
+                if(this.$route.query.page > data.last_page)
+                {
+                    this.$router.push({path: "/"})
+                    string= ""
+                    search()
+                }
+                console.log(data);
+                this.posts = data.data;
+                delete data.data;
+                this.page = data;
+            });
+        }
+        search();
         axios.get("/api/category").then(({ data }) => {
             this.categories = data;
         });
@@ -77,11 +90,13 @@ export default {
                 this.posts = data.data;
                 delete data.data;
                 this.page = data;
+                this.$router.push('?page='+data.current_page)
             });
         },
         openArticle(data) {
             console.log(data);
         },
+
     },
 };
 </script>
