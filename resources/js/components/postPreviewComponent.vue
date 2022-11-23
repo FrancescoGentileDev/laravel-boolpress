@@ -10,7 +10,7 @@
                     up the bulk of the card's content.
                 </p>
             </div>
-            <div class="card-footer text-muted">
+            <div class="card-footer text-muted" v-if="details.category.name">
             {{ details.category.name }}
             </div>
         </div>

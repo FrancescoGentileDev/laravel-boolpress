@@ -49,6 +49,11 @@ __webpack_require__.r(__webpack_exports__);
       apiReseach: "/api"
     };
   },
+  watch: {
+    $route: function $route(to, from) {
+      if (to.name === "home" && from.name === "category") this.goHome();
+    }
+  },
   created: function created() {
     var _this = this;
     var currentPath = this.$route.name;
@@ -90,17 +95,40 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
-    changePage: function changePage(direction) {
+    goHome: function goHome() {
       var _this2 = this;
-      var string = direction + "_page_url";
-      axios.get(this.page[string]).then(function (_ref3) {
+      axios.get("/api/posts").then(function (_ref3) {
         var data = _ref3.data;
-        console.log(data);
         _this2.posts = data.data;
+        _this2.title = "";
         delete data.data;
         _this2.page = data;
-        if (data.current_page > 1 && data.current_page <= data.last_page) _this2.$router.push("?page=" + data.current_page);else {
-          _this2.$router.push("");
+      });
+    },
+    changePage: function changePage(direction) {
+      var _this3 = this;
+      var currentPath = this.$route.name;
+      var string = direction + "_page_url";
+      axios.get(this.page[string]).then(function (_ref4) {
+        var data = _ref4.data;
+        console.log(data);
+        if (currentPath !== "category") {
+          _this3.posts = data.data;
+          delete data.data;
+          _this3.page = data;
+        } else {
+          _this3.title = data.name;
+          _this3.posts = data.posts.data;
+          delete data.posts.data;
+          _this3.page = data.posts;
+        }
+        console.log("current", _this3.page.current_page);
+        if (_this3.page.current_page > 1 && _this3.page.current_page <= _this3.page.last_page) {
+          console.log("cuia");
+          _this3.$router.push("?page=" + _this3.page.current_page);
+        } else {
+          console.log("porcosososo");
+          _this3.$router.push("");
         }
       });
     },
@@ -110,16 +138,16 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     clickCategory: function clickCategory(category) {
-      var _this3 = this;
+      var _this4 = this;
       console.log(category);
-      axios.get("/api/category/" + category).then(function (_ref4) {
-        var data = _ref4.data;
+      axios.get("/api/category/" + category).then(function (_ref5) {
+        var data = _ref5.data;
         console.log(data);
-        _this3.title = data.name;
-        _this3.posts = data.posts.data;
+        _this4.title = data.name;
+        _this4.posts = data.posts.data;
         delete data.posts.data;
-        _this3.page = data.posts;
-        _this3.$router.push("/category/" + category);
+        _this4.page = data.posts;
+        _this4.$router.push("/category/" + category);
       });
     }
   }
@@ -331,9 +359,9 @@ var render = function render() {
     }
   }, [_vm._v(_vm._s(_vm.details.title))]), _vm._v(" "), _c("p", {
     staticClass: "card-text"
-  }, [_vm._v("\n                Some quick example text to build on the card title and make\n                up the bulk of the card's content.\n            ")])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                Some quick example text to build on the card title and make\n                up the bulk of the card's content.\n            ")])]), _vm._v(" "), _vm.details.category.name ? _c("div", {
     staticClass: "card-footer text-muted"
-  }, [_vm._v("\n        " + _vm._s(_vm.details.category.name) + "\n        ")])])]);
+  }, [_vm._v("\n        " + _vm._s(_vm.details.category.name) + "\n        ")]) : _vm._e()])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;

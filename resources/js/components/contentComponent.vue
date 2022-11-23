@@ -6,7 +6,7 @@
             @clickCategory="clickCategory"
         />
         <div class="container" v-if="page">
-                <h3 v-if="title">{{ title }}</h3>
+            <h3 v-if="title">{{ title }}</h3>
             <div class="post-container">
                 <post-preview-component
                     v-for="(post, index) in posts"
@@ -63,6 +63,11 @@ export default {
             apiReseach: "/api",
         };
     },
+    watch: {
+        $route(to, from) {
+            if (to.name === "home" && from.name === "category") this.goHome();
+        },
+    },
     created() {
         let currentPath = this.$route.name;
 
@@ -88,11 +93,10 @@ export default {
                     delete data.data;
                     this.page = data;
                 } else {
-                    this.title = data.name
+                    this.title = data.name;
                     this.posts = data.posts.data;
                     delete data.posts.data;
                     this.page = data.posts;
-
                 }
             });
         };
@@ -102,19 +106,38 @@ export default {
         });
     },
     methods: {
+        goHome() {
+            axios.get("/api/posts").then(({ data }) => {
+                this.posts = data.data;
+                this.title = "";
+                delete data.data;
+                this.page = data;
+            });
+        },
         changePage(direction) {
+            let currentPath = this.$route.name;
             let string = direction + "_page_url";
             axios.get(this.page[string]).then(({ data }) => {
                 console.log(data);
-                this.posts = data.data;
-                delete data.data;
-                this.page = data;
+                if (currentPath !== "category") {
+                    this.posts = data.data;
+                    delete data.data;
+                    this.page = data;
+                } else {
+                    this.title = data.name;
+                    this.posts = data.posts.data;
+                    delete data.posts.data;
+                    this.page = data.posts;
+                }
+                console.log("current", this.page.current_page);
                 if (
-                    data.current_page > 1 &&
-                    data.current_page <= data.last_page
-                )
-                    this.$router.push("?page=" + data.current_page);
-                else {
+                    this.page.current_page > 1 &&
+                    this.page.current_page <= this.page.last_page
+                ) {
+                    console.log("cuia");
+                    this.$router.push("?page=" + this.page.current_page);
+                } else {
+                    console.log("porcosososo");
                     this.$router.push("");
                 }
             });
