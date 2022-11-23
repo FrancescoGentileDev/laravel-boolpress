@@ -47,9 +47,15 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
         //
+        $category = Category::where('slug', $slug)->first();
+        $category['posts'] = $category->posts()->orderBy('id', 'DESC')->paginate(6);
+        foreach ($category['posts'] as $post) {
+            $post['category'] = $post->category->name;
+        }
+        return response($category);
     }
 
     /**

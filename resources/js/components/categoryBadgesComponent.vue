@@ -1,7 +1,7 @@
 <template>
   <div>
   <ul class="d-flex">
-  <li v-for="(category, index) in categories" :key="index">{{ category.name }}</li>
+  <li @click="clickCategory(category.slug)" v-for="(category, index) in categories" :key="index">{{ category.name }}</li>
   </ul>
   </div>
 </template>
@@ -10,7 +10,12 @@
 export default {
     props: {
         categories: Array,
-    }
+    },
+    methods: {
+        clickCategory(data) {
+            this.$emit('clickCategory', data)
+        }
+    },
 }
 </script>
 
@@ -25,6 +30,8 @@ ul {
         flex-wrap: wrap;
         padding: 0 2rem;
         border-radius: 30px;
+        user-select: none;
+        cursor: pointer;
     }
 }
 </style>

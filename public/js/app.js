@@ -2023,7 +2023,13 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      hero: true
+    };
+  }
+});
 
 /***/ }),
 
@@ -2078,7 +2084,9 @@ var render = function render() {
         name: "about"
       }
     }
-  }, [_vm._v("About")])], 1), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _vm._m(1)]);
+  }, [_vm._v("About")])], 1), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _vm.hero ? _c("div", {
+    staticClass: "phrase"
+  }, [_c("h2", [_vm._v("SIMPLE BLOG WEBSITE")])]) : _vm._e()]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -2088,12 +2096,6 @@ var staticRenderFns = [function () {
       href: "/login"
     }
   }, [_vm._v("Login")])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "phrase"
-  }, [_c("h2", [_vm._v("SIMPLE BLOG WEBSITE")])]);
 }];
 render._withStripped = true;
 
@@ -53805,19 +53807,25 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     path: "/post/:slug",
     name: "post",
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! ./views/postSection.vue */ "./resources/js/views/postSection.vue"));
+      return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ./views/postSection.vue */ "./resources/js/views/postSection.vue"));
     }
   }, {
     path: "/about",
     name: "about",
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ./views/AboutSection.vue */ "./resources/js/views/AboutSection.vue"));
+      return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./views/AboutSection.vue */ "./resources/js/views/AboutSection.vue"));
+    }
+  }, {
+    path: "/category/:slug",
+    name: "category",
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ 0).then(__webpack_require__.bind(null, /*! ./views/homeSection.vue */ "./resources/js/views/homeSection.vue"));
     }
   }, {
     path: "/*",
     name: "notfound",
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./views/NotFoundSection.vue */ "./resources/js/views/NotFoundSection.vue"));
+      return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! ./views/NotFoundSection.vue */ "./resources/js/views/NotFoundSection.vue"));
     }
   }]
 });

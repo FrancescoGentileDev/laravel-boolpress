@@ -23,6 +23,11 @@ const router = new VueRouter({
             component: () => import("./views/AboutSection.vue"),
         },
         {
+            path: "/category/:slug",
+            name: "category",
+            component: () => import("./views/homeSection.vue"),
+        },
+        {
             path: "/*",
             name: "notfound",
             component: () => import("./views/NotFoundSection.vue"),

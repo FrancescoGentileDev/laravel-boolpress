@@ -1,7 +1,7 @@
 <template>
     <article>
         <div class="card" style="width: 20rem">
-            <img v-if="details.image" class="card-img-top" :src="details.image" alt="Card image cap" />
+            <img v-if="details.image" @click="clickTitle" class="card-img-top" :src="details.image" alt="Card image cap" />
             <div class="card-body">
                 <p class="card-subtitle text-muted">{{ date }}</p>
                 <h5 class="card-title" @click="clickTitle">{{ details.title }}</h5>
@@ -42,7 +42,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-h5 {
+h5, img {
     cursor: pointer;
     &:hover {
         text-decoration: underline;

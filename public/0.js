@@ -12,6 +12,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     categories: Array
+  },
+  methods: {
+    clickCategory: function clickCategory(data) {
+      this.$emit('clickCategory', data);
+    }
   }
 });
 
@@ -37,17 +42,26 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      title: "",
       posts: undefined,
       page: undefined,
-      categories: undefined
+      categories: undefined,
+      apiReseach: "/api"
     };
   },
   created: function created() {
     var _this = this;
+    var currentPath = this.$route.name;
+    if (currentPath === "home") {
+      this.apiReseach += "/posts";
+    } else if (currentPath === "category") {
+      this.apiReseach += "/category/" + this.$route.params.slug;
+    }
     var string = "";
     if (this.$route.query.page) string = "?page=" + this.$route.query.page;
+    console.log(this.apiReseach + string);
     var search = function search() {
-      axios.get("/api/posts" + string).then(function (_ref) {
+      axios.get(_this.apiReseach + string).then(function (_ref) {
         var data = _ref.data;
         if (_this.$route.query.page > data.last_page) {
           _this.$router.push({
@@ -57,9 +71,16 @@ __webpack_require__.r(__webpack_exports__);
           search();
         }
         console.log(data);
-        _this.posts = data.data;
-        delete data.data;
-        _this.page = data;
+        if (currentPath !== "category") {
+          _this.posts = data.data;
+          delete data.data;
+          _this.page = data;
+        } else {
+          _this.title = data.name;
+          _this.posts = data.posts.data;
+          delete data.posts.data;
+          _this.page = data.posts;
+        }
       });
     };
     search();
@@ -78,14 +99,27 @@ __webpack_require__.r(__webpack_exports__);
         _this2.posts = data.data;
         delete data.data;
         _this2.page = data;
-        if (data.current_page > 1 && data.current_page <= data.last_page) _this2.$router.push('?page=' + data.current_page);else {
-          _this2.$router.push('');
+        if (data.current_page > 1 && data.current_page <= data.last_page) _this2.$router.push("?page=" + data.current_page);else {
+          _this2.$router.push("");
         }
       });
     },
     openArticle: function openArticle(data) {
       this.$router.push({
         path: "/post/".concat(data)
+      });
+    },
+    clickCategory: function clickCategory(category) {
+      var _this3 = this;
+      console.log(category);
+      axios.get("/api/category/" + category).then(function (_ref4) {
+        var data = _ref4.data;
+        console.log(data);
+        _this3.title = data.name;
+        _this3.posts = data.posts.data;
+        delete data.posts.data;
+        _this3.page = data.posts;
+        _this3.$router.push("/category/" + category);
       });
     }
   }
@@ -162,7 +196,12 @@ var render = function render() {
     staticClass: "d-flex"
   }, _vm._l(_vm.categories, function (category, index) {
     return _c("li", {
-      key: index
+      key: index,
+      on: {
+        click: function click($event) {
+          return _vm.clickCategory(category.slug);
+        }
+      }
     }, [_vm._v(_vm._s(category.name))]);
   }), 0)]);
 };
@@ -190,10 +229,13 @@ var render = function render() {
     staticClass: "categories",
     attrs: {
       categories: _vm.categories
+    },
+    on: {
+      clickCategory: _vm.clickCategory
     }
   }), _vm._v(" "), _vm.page ? _c("div", {
     staticClass: "container"
-  }, [_c("div", {
+  }, [_vm.title ? _c("h3", [_vm._v(_vm._s(_vm.title))]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "post-container"
   }, _vm._l(_vm.posts, function (post, index) {
     return _c("post-preview-component", {
@@ -274,6 +316,9 @@ var render = function render() {
     attrs: {
       src: _vm.details.image,
       alt: "Card image cap"
+    },
+    on: {
+      click: _vm.clickTitle
     }
   }) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "card-body"
@@ -330,7 +375,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "ul[data-v-77013e58] {\n  list-style: none;\n  justify-content: space-between;\n  gap: 1rem;\n}\nul li[data-v-77013e58] {\n  font-size: 1.3rem;\n  border: 2px solid #666;\n  flex-wrap: wrap;\n  padding: 0 2rem;\n  border-radius: 30px;\n}", ""]);
+exports.push([module.i, "ul[data-v-77013e58] {\n  list-style: none;\n  justify-content: space-between;\n  gap: 1rem;\n}\nul li[data-v-77013e58] {\n  font-size: 1.3rem;\n  border: 2px solid #666;\n  flex-wrap: wrap;\n  padding: 0 2rem;\n  border-radius: 30px;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n          user-select: none;\n  cursor: pointer;\n}", ""]);
 
 // exports
 
@@ -368,7 +413,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "h5[data-v-6ee2ddc0] {\n  cursor: pointer;\n}\nh5[data-v-6ee2ddc0]:hover {\n  text-decoration: underline;\n}", ""]);
+exports.push([module.i, "h5[data-v-6ee2ddc0], img[data-v-6ee2ddc0] {\n  cursor: pointer;\n}\nh5[data-v-6ee2ddc0]:hover, img[data-v-6ee2ddc0]:hover {\n  text-decoration: underline;\n}", ""]);
 
 // exports
 

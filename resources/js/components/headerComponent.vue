@@ -8,14 +8,20 @@
                 <li><a href="/login">Login</a></li>
             </ul>
         </nav>
-        <div class='phrase'>
+        <div class='phrase' v-if="hero">
         <h2>SIMPLE BLOG WEBSITE</h2>
         </div>
     </header>
 </template>
 
 <script>
-export default {};
+export default {
+    data() {
+        return {
+            hero: true
+            }
+    }
+};
 </script>
 
 <style lang="scss" scoped>
